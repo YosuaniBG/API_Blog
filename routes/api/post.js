@@ -1,3 +1,5 @@
+const { bodyValidatorPost } = require("../../helpers/validators.helper");
+const { validate } = require("../../middlewares/validator");
 const {
   getAllPostsWithAuthor,
   createPost,
@@ -9,18 +11,22 @@ const router = require("express").Router();
 router.get("/", async (req, res) => {
   try {
     const [result] = await getAllPostsWithAuthor();
-    res.json(result);
-  } catch (err) {
-    res.json({ error: err.message });
+
+    res.status(200).json(result);
+
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 });
 
-router.post("/", async (req, res) => {
+router.post("/", bodyValidatorPost, validate, async (req, res) => {
   try {
     const [result] = await createPost(req.body);
-    res.json(result);
-  } catch (err) {
-    res.json({ error: err.message });
+
+    res.status(200).json(result);
+
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 });
 
