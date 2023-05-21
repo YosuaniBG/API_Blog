@@ -2,6 +2,7 @@ const { getAllAuthors, createAuthor, readPostbyAuthor } = require("../../models/
 
 const router = require("express").Router();
 
+// Ruta para acceder a todos los autores registrados
 router.get("/", async (req, res) => {
   try {
     const [result] = await getAllAuthors();
@@ -11,7 +12,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-
+// Ruta para obtener todos los Post registrados por un autor en particular
 router.get("/:idAuthor", async (req, res) => {
   try {
     const [result] = await readPostbyAuthor(req.params.idAuthor);
@@ -21,7 +22,7 @@ router.get("/:idAuthor", async (req, res) => {
   }
 });
 
-
+// Ruta para crear un nuevo autor
 router.post("/", async (req, res) => {
   try {
     const [result] = await createAuthor(req.body);
